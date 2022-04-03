@@ -10,4 +10,5 @@ type rocksdbCache struct {
 	ro *C.rocksdb_readoptions_t
 	wo *C.rocksdb_writeoptions_t
 	e  *C.char
+	ch chan *pair
 }

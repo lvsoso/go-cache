@@ -16,5 +16,8 @@ func newRocksdbCache() *rocksdbCache {
 		panic(C.GoString(e))
 	}
 	C.rocksdb_options_destroy(options)
-	return &rocksdbCache{db, C.rocksdb_readoptions_create(), C.rocksdb_writeoptions_create(), e}
+	c := make(chan *pair, 5000)
+	wo := C.rocksdb_writeoptions_create()
+	go write_func(db, c, wo)
+	return &rocksdbCache{db, C.rocksdb_readoptions_create(), wo, e, c}
 }
