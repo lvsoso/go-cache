@@ -1,2 +1,4 @@
 cache-benchmark/cache-client
 rocksdb/*
+client/client
+go-cache
