@@ -17,14 +17,13 @@ type Node interface {
 type node struct {
 	*consistent.Consistent
 	addr string
-	port int
 }
 
 func (n *node) Addr() string {
 	return n.addr
 }
 
-func New(addr string, port int, cluster string) (Node, error) {
+func New(addr string, cluster string) (Node, error) {
 	conf := memberlist.DefaultLANConfig()
 	conf.Name = addr
 	conf.BindAddr = addr
@@ -54,7 +53,7 @@ func New(addr string, port int, cluster string) (Node, error) {
 			time.Sleep(time.Second)
 		}
 	}()
-	return &node{circle, addr, port}, nil
+	return &node{circle, addr}, nil
 }
 
 func (n *node) ShouldProcess(key string) (string, bool) {
